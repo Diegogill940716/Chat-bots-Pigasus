@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pigasus Wings - WhatsApp Business Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET Y VARIABLES ===== */
+        :root {
+            --primary-green: #075e54;
+            --secondary-green: #128c7e;
+            --light-green: #dcf8c6;
+            --chat-bg: #e5ddd5;
+            --white: #ffffff;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-400: #999999;
+            --gray-600: #666666;
+            --gray-700: #495057;
+            --gray-900: #212529;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        /* ===== LAYOUT PRINCIPAL ===== */
+        .demo-container {
+            background: var(--white);
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            height: 80vh;
+            min-height: 600px;
+        }
+
+        /* ===== PANEL DE INFORMACIÓN ===== */
+        .info-panel {
+            background: var(--gray-100);
+            padding: 2.5rem;
+            width: 40%;
+            overflow-y: auto;
+            border-right: 1px solid var(--gray-200);
+        }
+
+        .brand-header {
+            margin-bottom: 2rem;
+        }
+
+        .brand-title {
+            color: var(--gray-900);
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            letter-spacing: -0.025em;
+        }
+
+        .brand-subtitle {
+            color: var(--gray-600);
+            font-size: 1.125rem;
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.25rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid var(--gray-200);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-title {
+            color: var(--gray-900);
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-description {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* ===== CONTROLES DEMO ===== */
+        .demo-controls {
+            position: sticky;
+            bottom: 0;
+            background: var(--gray-100);
+            padding-top: 1.5rem;
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #d63384;
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 0.875rem;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .demo-button:hover {
+            background: #c12974;
+            transform: translateY(-1px);
+        }
+
+        .demo-button:active {
+            transform: translateY(0);
+        }
+
+        /* ===== CONTENEDOR WHATSAPP ===== */
+        .whatsapp-container {
+            width: 60%;
+            background: var(--chat-bg);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* ===== HEADER WHATSAPP ===== */
+        .whatsapp-header {
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .profile-pic {
+            width: 48px;
+            height: 48px;
+            background: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .profile-pic::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 35px;
+            height: 20px;
+            background: var(--white);
+            border-radius: 50% 50% 0 0;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 0.125rem;
+        }
+
+        .profile-status {
+            font-size: 0.875rem;
+            opacity: 0.85;
+            font-weight: 400;
+        }
+
+        /* ===== ÁREA DE CHAT ===== */
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.25rem;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23e5ddd5"/><path d="M0 0L50 50L0 100M50 0L100 50L50 100" stroke="%23d4cec5" stroke-width="0.5" fill="none"/></svg>');
+            background-size: 100px 100px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gray-400) transparent;
+        }
+
+        .chat-area::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-area::-webkit-scrollbar-thumb {
+            background: var(--gray-400);
+            border-radius: 3px;
+        }
+
+        /* ===== MENSAJES ===== */
+        .message {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-end;
+            gap: 0.5rem;
+            animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-content {
+            max-width: 75%;
+            padding: 0.875rem 1rem;
+            border-radius: 16px;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        .message.bot .message-content {
+            background: var(--white);
+            border-bottom-left-radius: 4px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .message.user .message-content {
+            background: var(--light-green);
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--gray-400);
+            margin-top: 0.5rem;
+            text-align: right;
+            font-weight: 400;
+        }
+
+        /* ===== INDICADOR DE ESCRITURA ===== */
+        .typing-indicator {
+            display: none;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 16px;
+            border-bottom-left-radius: 4px;
+            width: fit-content;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+        }
+
+        .typing-indicator.show {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gray-400);
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+
+            30% {
+                transform: translateY(-8px);
+                opacity: 1;
+            }
+        }
+
+        /* ===== MENÚ ===== */
+        .menu-container {
+            background: var(--gray-100);
+            padding: 1.25rem;
+            border-radius: var(--border-radius);
+            margin-top: 0.75rem;
+            border: 1px solid var(--gray-200);
+        }
+
+        .menu-category {
+            margin-bottom: 1.25rem;
+        }
+
+        .menu-category:last-child {
+            margin-bottom: 0;
+        }
+
+        .menu-category-title {
+            color: #d63384;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            border-bottom: 2px solid #d63384;
+            padding-bottom: 0.25rem;
+        }
+
+        .menu-item {
+            margin-bottom: 0.625rem;
+            padding: 0.5rem 0;
+            line-height: 1.4;
+        }
+
+        .menu-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .menu-item strong {
+            color: var(--gray-900);
+            font-weight: 600;
+        }
+
+        /* ===== ÁREA DE INPUT ===== */
+        .input-area {
+            background: var(--white);
+            padding: 1rem 1.25rem;
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 0.75rem 1.25rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 25px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+            font-family: inherit;
+            background: var(--gray-100);
+        }
+
+        .message-input:focus {
+            border-color: var(--primary-green);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(7, 94, 84, 0.1);
+        }
+
+        .message-input::placeholder {
+            color: var(--gray-400);
+        }
+
+        .send-button {
+            background: var(--primary-green);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .send-button:hover {
+            background: var(--secondary-green);
+            transform: scale(1.05);
+        }
+
+        .send-button:active {
+            transform: scale(0.95);
+        }
+
+        .send-button:disabled {
+            background: var(--gray-400);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .demo-container {
+                flex-direction: column;
+                height: 95vh;
+                border-radius: 16px;
+            }
+
+            .info-panel {
+                width: 100%;
+                padding: 1.5rem;
+                display: none;
+            }
+
+            .whatsapp-container {
+                width: 100%;
+            }
+
+            .demo-controls {
+                position: fixed;
+                bottom: 20px;
+                left: 20px;
+                right: 20px;
+                background: var(--white);
+                padding: 1rem;
+                border-radius: var(--border-radius);
+                box-shadow: var(--shadow-lg);
+                z-index: 1000;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .whatsapp-header {
+                padding: 0.75rem;
+            }
+
+            .chat-area {
+                padding: 1rem;
+            }
+
+            .input-area {
+                padding: 0.75rem;
+            }
+
+            .message-content {
+                max-width: 85%;
+                padding: 0.75rem;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo-container">
+        <div class="info-panel">
+            <div class="brand-header">
+                <h1 class="brand-title">🐷 Pigasus Wings</h1>
+                <div class="brand-subtitle">Pig & Burgers - Nothing is impossible!</div>
+            </div>
+
+            <div class="feature-card">
+                <h3 class="feature-title">🐷 Especialistas en Cerdo</h3>
+                <p class="feature-description">Pioneros de las hamburguesas con chicharrón en Medellín. Ganadores del
+                    Burger Master 2022.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3 class="feature-title">💬 Conversación Natural</h3>
+                <p class="feature-description">Sin menús complicados ni botones. Habla con nuestro asistente como si
+                    fuera un amigo.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3 class="feature-title">📅 Gestión de Reservas</h3>
+                <p class="feature-description">Verifica disponibilidad, confirma reservas y envía recordatorios
+                    automáticamente.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3 class="feature-title">🍽️ Menú Inteligente</h3>
+                <p class="feature-description">Recomendaciones personalizadas según preferencias, presupuesto y
+                    restricciones alimentarias.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3 class="feature-title">🚚 Pedidos y Domicilios</h3>
+                <p class="feature-description">Toma pedidos completos, calcula tiempos de entrega y procesa pagos en
+                    línea.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3 class="feature-title">🎉 Ocasiones Especiales</h3>
+                <p class="feature-description">Identifica celebraciones y ofrece servicios adicionales como decoración y
+                    sorpresas.</p>
+            </div>
+
+            <div class="demo-controls">
+                <button class="demo-button" onclick="chatBot.startDemo()">Iniciar Demo</button>
+                <button class="demo-button" onclick="chatBot.resetChat()">Reiniciar</button>
+            </div>
+        </div>
+
+        <div class="whatsapp-container">
+            <div class="whatsapp-header">
+                <div class="profile-pic">🐷</div>
+                <div class="profile-info">
+                    <div class="profile-name">Pigasus Wings</div>
+                    <div class="profile-status">Pig & Burgers 🐷</div>
+                </div>
+            </div>
+
+            <div class="chat-area" id="chatArea">
+                <div class="message bot">
+                    <div class="message-content">
+                        ¡Hola! 🐷✨ Bienvenido a Pigasus Wings, el lugar donde te hacemos volar con el mejor chicharrón y
+                        las hamburguesas más deliciosas de Medellín. Soy tu asistente virtual y estoy aquí 24/7 para
+                        ayudarte.
+
+                        ¿En qué puedo ayudarte hoy? Puedes preguntarme sobre nuestro menú, hacer una reserva, pedir a
+                        domicilio o lo que necesites 😊
+                        <div class="message-time">12:30</div>
+                    </div>
+                </div>
+
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+
+            <div class="input-area">
+                <input type="text" class="message-input" id="messageInput" placeholder="Escribe un mensaje..."
+                    maxlength="500" autocomplete="off">
+                <button class="send-button" id="sendButton" disabled>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M2 21L23 12L2 3V10L17 12L2 14V21Z" fill="currentColor" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== CHATBOT PRINCIPAL =====
+        class PigasusChatBot {
+            constructor() {
+                this.chatArea = document.getElementById('chatArea');
+                this.messageInput = document.getElementById('messageInput');
+                this.sendButton = document.getElementById('sendButton');
+                this.typingIndicator = document.getElementById('typingIndicator');
+
+                this.currentContext = '';
+                this.userData = {};
+                this.isTyping = false;
+                this.demoRunning = false;
+                this.demoTimeouts = [];
+
+                this.initializeEventListeners();
+                this.initializeResponses();
+            }
+
+            // ===== INICIALIZACIÓN =====
+            initializeEventListeners() {
+                this.messageInput.addEventListener('input', () => this.handleInputChange());
+                this.messageInput.addEventListener('keypress', (e) => this.handleKeyPress(e));
+                this.sendButton.addEventListener('click', () => this.sendMessage());
+            }
+
+            initializeResponses() {
+                this.responses = {
+                    menu: {
+                        keywords: ['menú', 'carta', 'comida', 'platos'],
+                        response: '¡Por supuesto! 🍽️ Te comparto nuestras especialidades. Somos expertos en cerdo y las mejores hamburguesas de chicharrón de Medellín:',
+                        showMenu: true
+                    },
+                    hamburguesas: {
+                        keywords: ['hamburguesa', 'burger', 'burguer'],
+                        response: '¡Ah, nuestras famosas hamburguesas! 🍔 Somos los pioneros de las hamburguesas con chicharrón en Medellín. Te cuento sobre nuestras estrellas:\n\n🏆 **Pigasus Original** ($35.000): Pan artesanal con parmesano, jugosa carne de res y cerdo, nuestro crujiente chicharrón bañado en salsa BBQ de la casa y queso cheddar derretido\n\n👑 **Afrodita** ($39.000): La ganadora del Burger Master 2024! Tiene mermelada de tocineta, salsa pink, cebolla crispy y coronada con queso papialpa frito\n\n🚀 **Fly Burger** ($41.000): Doble carne, chicharrón con Nutella (sí, leíste bien!), mostaza antigua y cogollo europeo\n\n¿Cuál te llama más la atención?'
+                    },
+                    chicharron: {
+                        keywords: ['chicharrón', 'chicharron', 'cerdo'],
+                        response: '¡El chicharrón es nuestra especialidad! 🐷✨\n\n🌟 **Chicharrón del Chef** ($40.000): El más aclamado, jugoso por dentro y crocante por fuera, viene con dos arepitas con chicharrón y mazorcas al estilo Pigasus\n\n🍗 **Chicharrón Wings**: Nuestra creación única\n• 6 unidades ($29.000)\n• 12 unidades ($59.000)\n• 24 unidades (¡para compartir!)\n\nTodos vienen bañados en nuestra salsa BBQ especial, con papas, zanahoria, apio y salsa de queso azul. ¿Te animas a probarlos?'
+                    },
+                    reserva: {
+                        keywords: ['reserva', 'mesa', 'apartar'],
+                        response: '¡Perfecto! Me encantaría ayudarte con tu reserva 📅\n\nSolo necesito saber:\n• ¿Para qué fecha te gustaría venir?\n• ¿Cuántas personas serían?\n• ¿Tienes alguna hora preferida?\n\nTe comento que estamos abiertos:\n📍 Lun-Jue: 12:00 PM - 9:00 PM\n📍 Vie-Sáb: 12:00 PM - 10:00 PM\n📍 Dom: 12:00 PM - 8:00 PM',
+                        context: 'waiting_for_reservation_details'
+                    },
+                    domicilio: {
+                        keywords: ['domicilio', 'delivery', 'entrega', 'llevar'],
+                        response: '¡Excelente! 🚚 Llevamos todo el sabor de Pigasus hasta tu casa.\n\nTrabajamos con Rappi y también tenemos servicio directo. ¿Qué prefieres?\n\nPara hacer tu pedido necesito saber:\n📍 ¿En qué zona estás?\n🍔 ¿Qué se te antoja? (hamburguesas, chicharrón, wings...)\n\nEl tiempo de entrega es de 45-60 minutos aproximadamente.',
+                        context: 'taking_order'
+                    },
+                    precios: {
+                        keywords: ['precio', 'costo', 'cuánto', 'vale'],
+                        response: 'Claro, te comparto algunos de nuestros precios 💰\n\n**🍔 Hamburguesas**: $35.000 - $45.000\n**🐷 Chicharrón del Chef**: $40.000\n**🍗 Chicharrón Wings x6**: $29.000\n**🥗 Entradas**: $16.000 - $30.000\n**🍺 Cervezas**: $9.000 - $13.000\n**🥤 Bebidas**: desde $6.500\n**🍮 Postres**: $12.000 - $16.000\n\n¿Te gustaría saber el precio de algo específico?'
+                    },
+                    ubicacion: {
+                        keywords: ['dónde', 'dirección', 'ubicación', 'sede'],
+                        response: '📍 Tenemos varias sedes para atenderte:\n\n**Belén**: Cra 81 #30A-37 (Estación Terpel)\n**El Poblado**: Cra 43A (zona rosa)\n**Envigado**: CC Viva Envigado, piso 3\n**Mayorca**: CC Mayorca Mega Plaza\n**Bello**: Av 43 #51-26\n\n¿Cuál te queda más cerca? También hacemos domicilios a toda el área metropolitana 🚚'
+                    }
+                };
+            }
+
+            // ===== MANEJO DE EVENTOS =====
+            handleInputChange() {
+                const hasText = this.messageInput.value.trim().length > 0;
+                this.sendButton.disabled = !hasText || this.isTyping;
+            }
+
+            handleKeyPress(event) {
+                if (event.key === 'Enter' && !event.shiftKey) {
+                    event.preventDefault();
+                    this.sendMessage();
+                }
+            }
+
+            // ===== UTILIDADES =====
+            getCurrentTime() {
+                const now = new Date();
+                return now.getHours().toString().padStart(2, '0') + ':' +
+                    now.getMinutes().toString().padStart(2, '0');
+            }
+
+            sanitizeInput(input) {
+                return input.trim().replace(/[<>]/g, '');
+            }
+
+            // ===== MANEJO DE MENSAJES =====
+            addMessage(content, isUser = false) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+
+                const messageContent = document.createElement('div');
+                messageContent.className = 'message-content';
+                messageContent.innerHTML = `
+                    ${content}
+                    <div class="message-time">${this.getCurrentTime()}</div>
+                `;
+
+                messageDiv.appendChild(messageContent);
+                this.chatArea.insertBefore(messageDiv, this.typingIndicator);
+                this.scrollToBottom();
+            }
+
+            showTyping() {
+                this.isTyping = true;
+                this.typingIndicator.classList.add('show');
+                this.sendButton.disabled = true;
+                this.scrollToBottom();
+            }
+
+            hideTyping() {
+                this.isTyping = false;
+                this.typingIndicator.classList.remove('show');
+                this.handleInputChange();
+            }
+
+            scrollToBottom() {
+                this.chatArea.scrollTop = this.chatArea.scrollHeight;
+            }
+
+            // ===== GENERACIÓN DE RESPUESTAS =====
+            generateResponse(message) {
+                const lowerMessage = message.toLowerCase();
+
+                // Manejo de contextos específicos
+                if (this.currentContext) {
+                    return this.handleContextualResponse(message, lowerMessage);
+                }
+
+                // Respuestas de saludo
+                if (this.isGreeting(lowerMessage)) {
+                    return this.getGreetingResponse();
+                }
+
+                // Respuestas de agradecimiento
+                if (this.isThankYou(lowerMessage)) {
+                    return this.getThankYouResponse();
+                }
+
+                // Buscar respuesta por palabras clave
+                for (const [key, responseData] of Object.entries(this.responses)) {
+                    if (responseData.keywords.some(keyword => lowerMessage.includes(keyword))) {
+                        if (responseData.context) {
+                            this.currentContext = responseData.context;
+                        }
+                        return responseData;
+                    }
+                }
+
+                // Respuestas especiales
+                if (lowerMessage.includes('hora') || lowerMessage.includes('horario')) {
+                    return this.getScheduleResponse();
+                }
+
+                if (lowerMessage.includes('promoción') || lowerMessage.includes('descuento')) {
+                    return this.getPromotionResponse();
+                }
+
+                if (lowerMessage.includes('alergia') || lowerMessage.includes('vegetariano')) {
+                    return this.getAllergyResponse();
+                }
+
+                // Respuesta por defecto
+                return this.getDefaultResponse();
+            }
+
+            handleContextualResponse(message, lowerMessage) {
+                switch (this.currentContext) {
+                    case 'waiting_for_reservation_details':
+                        return this.handleReservationDetails(message);
+                    case 'waiting_for_people':
+                        return this.handlePeopleCount(message);
+                    case 'waiting_for_name':
+                        return this.handleReservationName(message);
+                    case 'taking_order':
+                        return this.handleOrderDetails(message);
+                    default:
+                        this.currentContext = '';
+                        return this.generateResponse(message);
+                }
+            }
+
+            handleReservationDetails(message) {
+                // Detectar número de personas
+                const peopleMatch = message.match(/(\d+)\s*(persona|people)/i);
+                if (peopleMatch) {
+                    const people = parseInt(peopleMatch[1]);
+                    this.userData.people = people;
+                    this.currentContext = 'waiting_for_name';
+                    return {
+                        response: `¡Perfecto! Mesa para ${people} ${people === 1 ? 'persona' : 'personas'}. ¿A nombre de quién hago la reserva?`
+                    };
+                }
+
+                // Detectar solo números
+                const numberMatch = message.match(/^\d+$/);
+                if (numberMatch) {
+                    const people = parseInt(numberMatch[0]);
+                    if (people > 0 && people <= 20) {
+                        this.userData.people = people;
+                        this.currentContext = 'waiting_for_name';
+                        return {
+                            response: `¡Excelente! Mesa para ${people} ${people === 1 ? 'persona' : 'personas'}. ¿A nombre de quién hago la reserva?`
+                        };
+                    }
+                }
+
+                // Si menciona fecha/hora
+                if (message.toLowerCase().includes('hoy') || message.toLowerCase().includes('mañana')) {
+                    return {
+                        response: '¡Perfecto! ¿Para cuántas personas sería la reserva?'
+                    };
+                }
+
+                return {
+                    response: 'Me puedes decir ¿para cuántas personas sería la reserva? Por ejemplo: "para 4 personas" o simplemente "4"'
+                };
+            }
+
+            handlePeopleCount(message) {
+                const peopleMatch = message.match(/\d+/);
+                if (peopleMatch) {
+                    const people = parseInt(peopleMatch[0]);
+                    if (people > 0 && people <= 20) {
+                        this.userData.people = people;
+                        this.currentContext = 'waiting_for_name';
+                        return {
+                            response: `¡Perfecto! Mesa para ${people} ${people === 1 ? 'persona' : 'personas'}. ¿A nombre de quién hago la reserva?`
+                        };
+                    }
+                }
+                return {
+                    response: 'Por favor indícame un número válido de personas (1-20). Por ejemplo: "4 personas" o simplemente "4"'
+                };
+            }
+
+            handleReservationName(message) {
+                if (message.length > 2) {
+                    this.userData.name = message;
+                    this.currentContext = '';
+                    const reservationCode = `#PIG${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
+
+                    return {
+                        response: `¡Excelente ${this.userData.name}! ✅ Tu reserva está confirmada:\n\n📅 **Fecha**: Hoy\n⏰ **Hora**: 7:00 PM\n👥 **Personas**: ${this.userData.people}\n📍 **Mesa**: Terraza con vista\n🎫 **Código**: ${reservationCode}\n\nTe enviaré un recordatorio 2 horas antes. ¿Hay algo especial que debamos saber? ¿Alguna celebración o solicitud especial? 🐷💕`
+                    };
+                }
+                return {
+                    response: 'Por favor proporciona un nombre válido para la reserva.'
+                };
+            }
+
+            handleOrderDetails(message) {
+                const lowerMessage = message.toLowerCase();
+
+                // Detectar zona/dirección
+                if (lowerMessage.includes('poblado') || lowerMessage.includes('envigado') ||
+                    lowerMessage.includes('sabaneta') || lowerMessage.includes('belén')) {
+                    this.userData.zone = message;
+                    return {
+                        response: `¡Perfecto! Hacemos domicilios a ${this.userData.zone}. ¿Qué te gustaría pedir? Puedo recomendarte:\n\n🍔 Nuestras hamburguesas estrella\n🐷 El famoso chicharrón del chef\n🍗 Chicharrón wings\n\n¿Qué se te antoja?`
+                    };
+                }
+
+                // Si ya tiene zona y está pidiendo comida
+                if (this.userData.zone) {
+                    return {
+                        response: `¡Excelente elección! 😋 Para confirmar tu pedido necesito:\n\n📍 **Dirección exacta** en ${this.userData.zone}\n📞 **Número de contacto**\n💳 **Método de pago** (efectivo, tarjeta, transferencia)\n\nEl tiempo estimado de entrega es de 45-60 minutos. ¿Me proporcionas estos datos?`
+                    };
+                }
+
+                return {
+                    response: '¿En qué zona te encuentras? Por ejemplo: El Poblado, Envigado, Sabaneta, Belén, etc.'
+                };
+            }
+
+            // ===== RESPUESTAS ESPECÍFICAS =====
+            isGreeting(message) {
+                const greetings = ['hola', 'buenas', 'saludos', 'buenos días', 'buenas tardes', 'buenas noches', 'hey', 'qué tal'];
+                return greetings.some(greeting => message.includes(greeting));
+            }
+
+            getGreetingResponse() {
+                const greetingResponses = [
+                    '¡Hola! 🐷✨ Qué bueno tenerte por aquí. En Pigasus Wings hacemos volar tu paladar con nuestras famosas hamburguesas de chicharrón. ¿Vienes por primera vez o ya conoces nuestras delicias?',
+                    '¡Buenas! 🐷 Bienvenido a Pigasus Wings, donde nothing is impossible! ¿En qué puedo ayudarte hoy? ¿Menu, reserva o domicilio?',
+                    '¡Hola! 😊 Me da mucho gusto saludarte. Soy el asistente de Pigasus Wings y estoy aquí para ayudarte con lo que necesites. ¿Qué se te antoja hoy?'
+                ];
+
+                return {
+                    response: greetingResponses[Math.floor(Math.random() * greetingResponses.length)]
+                };
+            }
+
+            isThankYou(message) {
+                const thankYouPhrases = ['gracias', 'perfecto', 'excelente', 'muy bien', 'listo', 'ok', 'genial'];
+                return thankYouPhrases.some(phrase => message.includes(phrase));
+            }
+
+            getThankYouResponse() {
+                return {
+                    response: '¡Con mucho gusto! 🐷💕 Ha sido un placer ayudarte. Recuerda que estoy aquí 24/7 para lo que necesites. ¡Te esperamos pronto en Pigasus Wings! Si necesitas algo más, solo escríbeme.'
+                };
+            }
+
+            getScheduleResponse() {
+                return {
+                    response: '⏰ **Nuestros horarios son:**\n\n📅 **Lunes a Jueves**: 12:00 PM - 9:00 PM\n📅 **Viernes y Sábado**: 12:00 PM - 10:00 PM\n📅 **Domingos**: 12:00 PM - 8:00 PM\n\n¿Te gustaría hacer una reserva o prefieres pedir a domicilio? 🐷'
+                };
+            }
+
+            getPromotionResponse() {
+                return {
+                    response: '🎯 **¡Tenemos varias promociones!**\n\n🏷️ **Martes de Wings**: 2x1 en Chicharrón Wings\n🏷️ **Jueves Pigasus**: 15% off en hamburguesas\n🏷️ **Combo Familiar**: 2 hamburguesas + papas + bebidas por $85.000\n🏷️ **Happy Hour**: Cervezas a $7.000 (4-6 PM)\n\n¿Te interesa alguna en particular? También síguenos en Instagram @pigasusco para más promociones 📱'
+                };
+            }
+
+            getAllergyResponse() {
+                return {
+                    response: '🌱 **Por supuesto, tu bienestar es importante para nosotros.** Aunque somos especialistas en cerdo, tenemos opciones para todos:\n\n✅ Ensaladas frescas sin proteína animal\n✅ Pastas vegetarianas\n✅ Papas y acompañamientos veganos\n✅ Bebidas naturales\n✅ Postres sin gluten disponibles\n\nTambién podemos adaptar algunos platos. ¿Tienes alguna restricción específica? Cuéntame para recomendarte mejor 😊'
+                };
+            }
+
+            getDefaultResponse() {
+                const defaultResponses = [
+                    {
+                        response: 'Hmm, no estoy seguro de entender bien 🤔 ¿Te gustaría ver nuestro **menú**, hacer una **reserva** o pedir algo a **domicilio**? También puedo contarte sobre nuestras especialidades de cerdo y hamburguesas 🐷'
+                    },
+                    {
+                        response: '¡Me encantaría ayudarte mejor! 😊 Puedo mostrarte nuestras deliciosas hamburguesas de chicharrón, ayudarte con una reserva o tomar tu pedido. ¿Qué prefieres?'
+                    },
+                    {
+                        response: 'Disculpa, no entendí bien tu mensaje 🙈 Pero estoy aquí para ayudarte. ¿Qué tal si empezamos con algo específico? Puedo contarte sobre nuestro **menú**, **disponibilidad de mesas** o **servicio a domicilio** 🚚'
+                    }
+                ];
+
+                return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+            }
+
+            // ===== CREACIÓN DE MENÚ =====
+            createMenu() {
+                return `
+                    <div class="menu-container">
+                        <div class="menu-category">
+                            <h4 class="menu-category-title">🍔 Hamburguesas Estrella</h4>
+                            <div class="menu-item">• <strong>Pigasus Original</strong> - $35.000<br>La que nos hizo famosos: chicharrón crujiente bañado en BBQ</div>
+                            <div class="menu-item">• <strong>Afrodita</strong> - $39.000<br>Ganadora Burger Master 2024 con mermelada de tocineta</div>
+                            <div class="menu-item">• <strong>Fly Burger</strong> - $41.000<br>¡Con chicharrón y Nutella! Una locura deliciosa</div>
+                            <div class="menu-item">• <strong>Piggy Ultra</strong> - $45.000<br>Doble carne, doble chicharrón, doble placer</div>
+                        </div>
+                        
+                        <div class="menu-category">
+                            <h4 class="menu-category-title">🐷 Especialidades del Chef</h4>
+                            <div class="menu-item">• <strong>Chicharrón del Chef</strong> - $40.000<br>Jugoso por dentro, crocante por fuera + arepitas y mazorcas</div>
+                            <div class="menu-item">• <strong>Chicharrón Wings</strong><br>6 unidades - $29.000 | 12 unidades - $59.000</div>
+                            <div class="menu-item">• <strong>Costillas BBQ</strong> - $46.000<br>400g de costillas bañadas en nuestra salsa especial</div>
+                        </div>
+                        
+                        <div class="menu-category">
+                            <h4 class="menu-category-title">🥗 Entradas & Acompañamientos</h4>
+                            <div class="menu-item">• <strong>Arepitas Rellenas</strong> - $16.000<br>Con chicharrón y queso, servidas con crema agria</div>
+                            <div class="menu-item">• <strong>Queso Papialpa</strong> - $20.500<br>Deditos fritos con salsa de chile dulce</div>
+                            <div class="menu-item">• <strong>Papas Pigasus</strong> - $18.000<br>Con chicharrón desmenuzado y salsas especiales</div>
+                        </div>
+                        
+                        <div class="menu-category">
+                            <h4 class="menu-category-title">🍺 Bebidas</h4>
+                            <div class="menu-item">• Cervezas artesanales desde $9.000</div>
+                            <div class="menu-item">• Jugos naturales desde $6.500</div>
+                            <div class="menu-item">• Gaseosas desde $5.000</div>
+                            <div class="menu-item">• Limonadas especiales $8.000</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // ===== ENVÍO DE MENSAJES =====
+            async sendMessage() {
+                const message = this.sanitizeInput(this.messageInput.value);
+                if (!message || this.isTyping) return;
+
+                // Agregar mensaje del usuario
+                this.addMessage(message, true);
+                this.messageInput.value = '';
+                this.handleInputChange();
+
+                // Mostrar indicador de escritura
+                this.showTyping();
+
+                // Simular tiempo de respuesta realista
+                const responseTime = 800 + Math.random() * 1200;
+
+                try {
+                    await new Promise(resolve => setTimeout(resolve, responseTime));
+
+                    const responseData = this.generateResponse(message);
+                    let responseContent = responseData.response;
+
+                    if (responseData.showMenu) {
+                        responseContent += this.createMenu();
+                    }
+
+                    this.hideTyping();
+                    this.addMessage(responseContent);
+
+                } catch (error) {
+                    console.error('Error generando respuesta:', error);
+                    this.hideTyping();
+                    this.addMessage('Disculpa, tuve un pequeño problema. ¿Podrías repetir tu mensaje? 😅');
+                }
+            }
+
+            // ===== DEMO AUTOMÁTICO =====
+            startDemo() {
+
+                if (this.demoRunning) return;
+                this.demoRunning = true;
+
+                // Resetear chat antes de empezar
+                this.resetChat();
+
+                const demoMessages = [
+                    { text: "Hola! Quiero conocer su menú", delay: 1500 },
+                    { text: "Me interesa una hamburguesa con chicharrón", delay: 5000 },
+                    { text: "Cuánto cuesta la Afrodita?", delay: 8500 },
+                    { text: "Perfecto, quiero hacer una reserva para hoy", delay: 12000 },
+                    { text: "Para 2 personas", delay: 16000 },
+                    { text: "Carlos Mendoza", delay: 19000 },
+                    { text: "Gracias! Nos vemos en la noche", delay: 22500 }
+                ];
+                // Evitar múltiples demos simultáneos
+
+
+                // Limpiar timeouts anteriores si existen
+                if (this.demoTimeouts) {
+                    this.demoTimeouts.forEach(timeout => clearTimeout(timeout));
+                }
+                this.demoTimeouts = [];
+
+                // Ejecutar cada mensaje del demo
+                // Evitar múltiples demos simultáneo
+
+                demoMessages.forEach((msg) => {
+                    const timeout = setTimeout(() => {
+                        // Escribir el texto completo y enviarlo
+                        this.messageInput.value = msg.text;
+                        this.handleInputChange();
+                        // Evitar múltiples demos simultáneos
+                        this.sendMessage();
+                    }, msg.delay);
+
+                    this.demoTimeouts.push(timeout);
+                });
+
+                // Finalizar demo después del último mensaje
+                const finalTimeout = setTimeout(() => {
+                    this.demoRunning = false;
+                    this.demoTimeouts = [];
+                }, 25000);
+
+                this.demoTimeouts.push(finalTimeout);
+            }
+
+
+
+            // ===== REINICIAR CHAT =====
+            resetChat() {
+                // Detener demo si está corriendo
+                this.demoRunning = false;
+                if (this.demoTimeouts) {
+                    this.demoTimeouts.forEach(timeout => clearTimeout(timeout));
+                    this.demoTimeouts = [];
+                }
+
+                this.currentContext = '';
+                this.userData = {};
+                this.hideTyping();
+
+                this.chatArea.innerHTML = `
+                    <div class="message bot">
+                        <div class="message-content">
+                            ¡Hola! 🐷✨ Bienvenido a Pigasus Wings, el lugar donde te hacemos volar con el mejor chicharrón y las hamburguesas más deliciosas de Medellín. Soy tu asistente virtual y estoy aquí 24/7 para ayudarte. 
+                            
+                            ¿En qué puedo ayudarte hoy? Puedes preguntarme sobre nuestro menú, hacer una reserva, pedir a domicilio o lo que necesites 😊
+                            <div class="message-time">${this.getCurrentTime()}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="typing-indicator" id="typingIndicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                `;
+
+                // Referenciar el nuevo elemento
+                this.typingIndicator = document.getElementById('typingIndicator');
+                this.messageInput.value = '';
+                this.handleInputChange();
+                this.messageInput.focus();
+            }
+        }
+
+        // ===== INICIALIZACIÓN =====
+        const chatBot = new PigasusChatBot();
+
+        // Focus inicial en el input
+        document.addEventListener('DOMContentLoaded', () => {
+            chatBot.messageInput.focus();
+        });
+
+        // Prevenir envío de formulario si se envuelve en form
+        document.addEventListener('submit', (e) => {
+            e.preventDefault();
+        });
+    </script>
+</body>
+
+</html>
